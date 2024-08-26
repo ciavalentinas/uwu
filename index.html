@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .category {
+            margin-bottom: 20px;
+        }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .item button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .item button:hover {
+            background-color: #0056b3;
+        }
+        .summary {
+            margin-top: 20px;
+        }
+        .total {
+            font-size: 1.5em;
+            text-align: right;
+            margin-top: 10px;
+            color: #007bff;
+        }
+        .clear-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .clear-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Order Calculator</h2>
+        <div class="category">
+            <label for="categories">Category:</label>
+            <select id="categories">
+                <option value="karsti-patiekalai">Karšti patiekalai</option>
+            </select>
+        </div>
+        <div id="items">
+            <!-- Items will be populated here based on the category -->
+        </div>
+        <div class="summary">
+            <h3>Order Summary</h3>
+            <ul id="summary-list">
+                <!-- Selected items will be listed here -->
+            </ul>
+            <div class="total">
+                Total: <span id="total-price">0$</span>
+            </div>
+            <button class="clear-btn" onclick="clearOrder()">Clear Order</button>
+        </div>
+    </div>
+
+    <script>
+        const itemsData = {
+            'karsti-patiekalai': [
+                { name: 'Menkė tešloje', price: 12 },
+                { name: 'Lašišos kepsnys', price: 12 },
+                { name: 'Vištienos kepsnys', price: 12 },
+                { name: 'Starkio kepsnys', price: 12 },
+                { name: 'Cepelinai', price: 12 },
+                { name: 'Vedarai', price: 12 },
+                { name: 'Kūgelis', price: 12 },
+                { name: 'Balandėliai', price: 12 },
+                { name: 'Šašlykai', price: 12 },
+                { name: 'Šonkauliai', price: 12 },
+                { name: 'Traškios krevetės', price: 12 },
+                { name: 'Suši', price: 13 },
+                { name: 'Koldūnai', price: 10 },
+                { name: 'Čeburėkai', price: 10 },
+            ]
+        };
+
+        const itemsContainer = document.getElementById('items');
+        const summaryList = document.getElementById('summary-list');
+        const totalPriceElement = document.getElementById('total-price');
+
+        let order = {};
+
+        function renderItems(category) {
+            itemsContainer.innerHTML = '';
+            const items = itemsData[category];
+            items.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('item');
+                itemElement.innerHTML = `
+                    <span>${item.name} (${item.price}$)</span>
+                    <button onclick="addItem(${index})">+</button>
+                    <span id="item-quantity-${index}">0</span>
+                    <button onclick="removeItem(${index})">-</button>
+                `;
+                itemsContainer.appendChild(itemElement);
+            });
+        }
+
+        function updateSummary() {
+            summaryList.innerHTML = '';
+            let total = 0;
+            for (let [index, quantity] of Object.entries(order)) {
+                const item = itemsData['karsti-patiekalai'][index];
+                total += item.price * quantity;
+                summaryList.innerHTML += `<li>${item.name} x${quantity} - ${item.price * quantity}$</li>`;
+            }
+            totalPriceElement.textContent = `${total}$`;
+        }
+
+        function addItem(index) {
+            if (!order[index]) {
+                order[index] = 0;
+            }
+            order[index]++;
+            document.getElementById(`item-quantity-${index}`).textContent = order[index];
+            updateSummary();
+        }
+
+        function removeItem(index) {
+            if (order[index] > 0) {
+                order[index]--;
+                document.getElementById(`item-quantity-${index}`).textContent = order[index];
+                if (order[index] === 0) {
+                    delete order[index];
+                }
+                updateSummary();
+            }
+        }
+
+        function clearOrder() {
+            order = {};
+            renderItems('karsti-patiekalai');
+            updateSummary();
+        }
+
+        document.getElementById('categories').addEventListener('change', function () {
+            renderItems(this.value);
+        });
+
+        // Initial render
+        renderItems('karsti-patiekalai');
+    </script>
+</body>
+</html>
