@@ -21,7 +21,7 @@
         }
         h2 {
             text-align: center;
-            color: #333;
+            color: #6a5acd; /* Soft pastel blue */
         }
         .categories {
             display: flex;
@@ -32,22 +32,30 @@
             flex: 1 1 45%;
             margin: 10px;
             padding: 15px;
-            background-color: #e9ecef;
+            background-color: #e0bbd4; /* Pastel lavender */
             border-radius: 5px;
+        }
+        .category h3 {
+            color: #ffafcc; /* Soft pastel pink */
         }
         .item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin: 10px 0;
+            background-color: #f5f5f5; /* Light pastel gray */
+            padding: 10px;
+            border-radius: 5px;
         }
         .item-name {
             flex: 2;
+            color: #333;
         }
         .item-price {
             flex: 1;
             text-align: right;
             padding-right: 10px;
+            color: #a3c2c2; /* Mint green */
         }
         .item-quantity {
             display: flex;
@@ -55,22 +63,23 @@
         }
         .item-quantity button {
             padding: 5px 10px;
-            background-color: #007bff;
+            background-color: #f6a5c0; /* Soft pastel pink */
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
         .item-quantity button:hover {
-            background-color: #0056b3;
+            background-color: #f77f9d; /* Slightly darker pastel pink */
         }
         .item-quantity input {
             width: 50px;
             text-align: center;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
             border-radius: 4px;
             margin: 0 5px;
             padding: 5px;
+            color: #333;
         }
         .summary {
             margin-top: 20px;
@@ -79,13 +88,13 @@
             font-size: 1.5em;
             text-align: right;
             margin-top: 10px;
-            color: #007bff;
+            color: #6a5acd; /* Soft pastel blue */
         }
         .clear-btn {
             display: block;
             width: 100%;
             padding: 10px;
-            background-color: #dc3545;
+            background-color: #f7c6c7; /* Soft pastel peach */
             color: #fff;
             border: none;
             border-radius: 4px;
@@ -93,7 +102,7 @@
             margin-top: 20px;
         }
         .clear-btn:hover {
-            background-color: #c82333;
+            background-color: #f6a5a9; /* Slightly darker pastel peach */
         }
         @media (max-width: 600px) {
             .category {
@@ -180,36 +189,32 @@
         let order = {};
 
         const updateSummary = () => {
-    const summaryList = document.getElementById('summary-list');
-    const totalPriceElement = document.getElementById('total-price');
-    summaryList.innerHTML = '';
-    let total = 0;
+            const summaryList = document.getElementById('summary-list');
+            const totalPriceElement = document.getElementById('total-price');
+            summaryList.innerHTML = '';
+            let total = 0;
 
-    for (let key in order) {
-        // Split the key from the last hyphen to ensure correct category extraction
-        const lastHyphenIndex = key.lastIndexOf('-');
-        const category = key.substring(0, lastHyphenIndex);
-        const index = key.substring(lastHyphenIndex + 1);
+            for (let key in order) {
+                // Split the key from the last hyphen to ensure correct category extraction
+                const lastHyphenIndex = key.lastIndexOf('-');
+                const category = key.substring(0, lastHyphenIndex);
+                const index = key.substring(lastHyphenIndex + 1);
 
-        console.log("Key:", key, "Category:", category, "Index:", index); // Debugging line
-
-        if (itemsData[category]) {
-            const item = itemsData[category][index];
-            const quantity = order[key];
-            const itemTotal = item.price * quantity;
-            total += itemTotal;
-            summaryList.innerHTML += `<li>${item.name} x${quantity} - ${itemTotal}$</li>`;
-        } else {
-            console.error(`Category ${category} not found in itemsData.`); // Debugging line
-        }
-    }
-    totalPriceElement.textContent = `${total}$`;
-};
-
+                if (itemsData[category]) {
+                    const item = itemsData[category][index];
+                    const quantity = order[key];
+                    const itemTotal = item.price * quantity;
+                    total += itemTotal;
+                    summaryList.innerHTML += `<li>${item.name} x${quantity} - ${itemTotal}$</li>`;
+                } else {
+                    console.error(`Category ${category} not found in itemsData.`);
+                }
+            }
+            totalPriceElement.textContent = `${total}$`;
+        };
 
         const addItem = (category, index) => {
             const key = `${category}-${index}`;
-            console.log("Add Item:", "Category:", category, "Index:", index, "Key:", key); // Debugging line
             if (!order[key]) {
                 order[key] = 0;
             }
@@ -220,7 +225,6 @@
 
         const removeItem = (category, index) => {
             const key = `${category}-${index}`;
-            console.log("Remove Item:", "Category:", category, "Index:", index, "Key:", key); // Debugging line
             if (order[key] > 0) {
                 order[key]--;
                 document.getElementById(`item-quantity-${category}-${index}`).value = order[key];
@@ -234,7 +238,6 @@
         const updateItem = (category, index, value) => {
             const key = `${category}-${index}`;
             const quantity = parseInt(value);
-            console.log("Update Item:", "Category:", category, "Index:", index, "Key:", key, "Quantity:", quantity); // Debugging line
             if (quantity >= 0) {
                 order[key] = quantity;
                 updateSummary();
