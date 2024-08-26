@@ -123,8 +123,32 @@
                 <div id="karstipatiekalai"></div>
             </div>
             <div class="category">
+                <h3>Sriubos</h3>
+                <div id="sriubos"></div>
+            </div>
+            <div class="category">
+                <h3>Picos / Salotos</h3>
+                <div id="picos"></div>
+            </div>
+            <div class="category">
+                <h3>Desertai</h3>
+                <div id="Desertai"></div>
+            </div>
+            <div class="category">
+                <h3>Kita</h3>
+                <div id="kita"></div>
+            </div>
+            <div class="category">
+                <h3>Gėrimai</h3>
+                <div id="gerimai"></div>
+            </div>
+            <div class="category">
                 <h3>Alkoholis</h3>
                 <div id="alkoholis"></div>
+            </div>
+            <div class="category">
+                <h3>Alkoholiniai kokteiliai</h3>
+                <div id="kokteiliai"></div>
             </div>
         </div>
         <div class="summary">
@@ -133,7 +157,7 @@
                 <!-- Selected items will be listed here -->
             </ul>
             <div class="total">
-                Total: <span id="total-price">0$</span>
+                Iš viso: <span id="total-price">0$</span>
             </div>
             <button class="clear-btn" onclick="clearOrder()">Išvalyti</button>
         </div>
@@ -157,6 +181,47 @@
                 { name: 'Koldūnai', price: 10 },
                 { name: 'Čeburėkai', price: 10 },
             ],
+            'sriubos': [
+                { name: 'Šaltibarščiai', price: 10 },
+                { name: 'Kopūstų sriuba', price: 10 },
+                { name: 'Trinta moliūgų sriuba', price: 10 },
+                { name: 'Barščių sriuba', price: 10 },
+                { name: 'Čili sriuba', price: 10 },
+            ],
+            'picos': [
+                { name: 'Cezario salotos', price: 10 },
+                { name: 'Pica su ananasais ir šonine', price: 20 },
+                { name: 'Pica su faršu ir alyvuogėmis', price: 20 },
+                { name: 'Pica su kumpiu ir pievagrybiais', price: 20 },
+            ],
+            'desertai': [
+                { name: 'Šokoladinis keksiukas su vyšniomis', price: 10 },
+                { name: 'Ledai su vafliu', price: 20 },
+                { name: 'Blyneliai su varške', price: 20 },
+                { name: 'Spurgų dėžutė 12 vnt.', price: 20 },
+                { name: 'Vestuvinis tortas', price: 250 },
+                { name: 'Mėlynas tortas', price: 150 },
+                { name: 'Rūžavas tortas', price: 150 },
+                { name: 'UWU tortas', price: 25 },
+                { name: 'UWU sausainiai', price: 10 },
+                { name: 'Macaronsai', price: 10 },
+            ],
+            'kita': [
+                { name: 'Deimančiuko rauginti agurkai', price: 15 },
+                { name: 'Šampano dovanų dėžutė', price: 150 },
+                { name: 'Saldainių ir šampano dovanų dėžutė', price: 150 },
+                { name: 'Saldainių ir viskio dovanų dėžutė', price: 150 },
+                { name: 'Viskio dovanų dėžutė', price: 150 },
+                { name: 'Sezoninė dėžutė', price: 200 },
+            ],
+            'gerimai': [
+                { name: 'Deimančiuko rauginti agurkai', price: 15 },
+                { name: 'Šampano dovanų dėžutė', price: 150 },
+                { name: 'Saldainių ir šampano dovanų dėžutė', price: 150 },
+                { name: 'Saldainių ir viskio dovanų dėžutė', price: 150 },
+                { name: 'Viskio dovanų dėžutė', price: 150 },
+                { name: 'Sezoninė dėžutė', price: 200 },
+            ],
             'alkoholis': [
                 { name: 'Degtinė 100ml', price: 3 },
                 { name: 'Alus', price: 5 },
@@ -164,6 +229,17 @@
                 { name: 'Vynas', price: 5 },
                 { name: 'Draugų viskis', price: 8 },
                 { name: 'Šampanas', price: 7 },
+            ],
+            'kokteiliai': [
+                { name: 'Mėlynoji lagūna', price: 10 },
+                { name: 'Vaivorykštė', price: 10 },
+                { name: 'Viskis su kaukole', price: 10 },
+                { name: 'Žalioji vesper', price: 8 },
+                { name: 'Cosmopolitan', price: 8 },
+                { name: 'Mojito', price: 8 },
+                { name: 'Mai Tai', price: 8 },
+                { name: 'Mint Julep', price: 8 },
+                { name: 'Caipirinha', price: 8 },
             ]
         };
 
@@ -246,13 +322,25 @@
         const clearOrder = () => {
             order = {};
             renderItems('karstipatiekalai', 'karstipatiekalai');
+            renderItems('sriubos', 'sriubos');
+            renderItems('picos', 'picos');
+            renderItems('desertai', 'desertai');
+            renderItems('kita', 'kita');
+            renderItems('gerimai', 'gerimai');
             renderItems('alkoholis', 'alkoholis');
+            renderItems('kokteiliai', 'kokteiliai');
             updateSummary();
         };
 
         // Initial render
         renderItems('karstipatiekalai', 'karstipatiekalai');
-        renderItems('alkoholis', 'alkoholis');
+            renderItems('sriubos', 'sriubos');
+            renderItems('picos', 'picos');
+            renderItems('desertai', 'desertai');
+            renderItems('kita', 'kita');
+            renderItems('gerimai', 'gerimai');
+            renderItems('alkoholis', 'alkoholis');
+            renderItems('kokteiliai', 'kokteiliai');
     </script>
 </body>
 </html>
