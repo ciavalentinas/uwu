@@ -169,7 +169,7 @@
                     <span class="item-price">${item.price}$</span>
                     <div class="item-quantity">
                         <button onclick="removeItem('${category}', ${index})">-</button>
-                        <input type="number" id="item-quantity-${category}-${index}" value="0" min="0" readonly>
+                        <input type="number" id="item-quantity-${category}-${index}" value="0" min="0" oninput="updateItem('${category}', ${index}, this.value)">
                         <button onclick="addItem('${category}', ${index})">+</button>
                     </div>
                 `;
@@ -211,6 +211,15 @@
                 if (order[key] === 0) {
                     delete order[key];
                 }
+                updateSummary();
+            }
+        };
+
+        const updateItem = (category, index, value) => {
+            const key = `${category}-${index}`;
+            const quantity = parseInt(value);
+            if (quantity >= 0) {
+                order[key] = quantity;
                 updateSummary();
             }
         };
