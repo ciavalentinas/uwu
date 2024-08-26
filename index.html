@@ -187,8 +187,9 @@
             for (let [key, quantity] of Object.entries(order)) {
                 const [category, index] = key.split('-');
                 const item = itemsData[category][index];
-                total += item.price * quantity;
-                summaryList.innerHTML += `<li>${item.name} x${quantity} - ${item.price * quantity}$</li>`;
+                const itemTotal = item.price * quantity;
+                total += itemTotal;
+                summaryList.innerHTML += `<li>${item.name} x${quantity} - ${itemTotal}$</li>`;
             }
             totalPriceElement.textContent = `${total}$`;
         };
