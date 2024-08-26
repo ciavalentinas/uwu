@@ -184,18 +184,25 @@
             const totalPriceElement = document.getElementById('total-price');
             summaryList.innerHTML = '';
             let total = 0;
-            for (let [key, quantity] of Object.entries(order)) {
+            for (let key in order) {
                 const [category, index] = key.split('-');
-                const item = itemsData[category][index];
-                const itemTotal = item.price * quantity;
-                total += itemTotal;
-                summaryList.innerHTML += `<li>${item.name} x${quantity} - ${itemTotal}$</li>`;
+                console.log("Key:", key, "Category:", category, "Index:", index); // Debugging line
+                if (itemsData[category]) {
+                    const item = itemsData[category][index];
+                    const quantity = order[key];
+                    const itemTotal = item.price * quantity;
+                    total += itemTotal;
+                    summaryList.innerHTML += `<li>${item.name} x${quantity} - ${itemTotal}$</li>`;
+                } else {
+                    console.error(`Category ${category} not found in itemsData.`); // Debugging line
+                }
             }
             totalPriceElement.textContent = `${total}$`;
         };
 
         const addItem = (category, index) => {
             const key = `${category}-${index}`;
+            console.log("Add Item:", "Category:", category, "Index:", index, "Key:", key); // Debugging line
             if (!order[key]) {
                 order[key] = 0;
             }
@@ -206,6 +213,7 @@
 
         const removeItem = (category, index) => {
             const key = `${category}-${index}`;
+            console.log("Remove Item:", "Category:", category, "Index:", index, "Key:", key); // Debugging line
             if (order[key] > 0) {
                 order[key]--;
                 document.getElementById(`item-quantity-${category}-${index}`).value = order[key];
@@ -219,6 +227,7 @@
         const updateItem = (category, index, value) => {
             const key = `${category}-${index}`;
             const quantity = parseInt(value);
+            console.log("Update Item:", "Category:", category, "Index:", index, "Key:", key, "Quantity:", quantity); // Debugging line
             if (quantity >= 0) {
                 order[key] = quantity;
                 updateSummary();
