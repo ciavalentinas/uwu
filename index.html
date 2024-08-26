@@ -12,7 +12,7 @@
             padding: 20px;
         }
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
@@ -23,14 +23,30 @@
             text-align: center;
             color: #333;
         }
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
         .category {
-            margin-bottom: 20px;
+            flex: 1 1 45%;
+            margin: 10px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
         }
         .item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin: 10px 0;
+        }
+        .item input[type="number"] {
+            width: 50px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
         }
         .item button {
             padding: 5px 10px;
@@ -66,19 +82,28 @@
         .clear-btn:hover {
             background-color: #c82333;
         }
+        @media (max-width: 600px) {
+            .category {
+                flex: 1 1 100%;
+            }
+            .item input[type="number"] {
+                width: 40px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Order Calculator</h2>
-        <div class="category">
-            <label for="categories">Category:</label>
-            <select id="categories">
-                <option value="karsti-patiekalai">Karšti patiekalai</option>
-            </select>
-        </div>
-        <div id="items">
-            <!-- Items will be populated here based on the category -->
+        <div class="categories">
+            <div class="category">
+                <h3>Karšti patiekalai</h3>
+                <div id="karsti-patiekalai"></div>
+            </div>
+            <div class="category">
+                <h3>Alkoholis</h3>
+                <div id="alkoholis"></div>
+            </div>
         </div>
         <div class="summary">
             <h3>Order Summary</h3>
@@ -109,74 +134,87 @@
                 { name: 'Suši', price: 13 },
                 { name: 'Koldūnai', price: 10 },
                 { name: 'Čeburėkai', price: 10 },
+            ],
+            'alkoholis': [
+                { name: 'Degtinė 100ml', price: 3 },
+                { name: 'Alus', price: 5 },
+                { name: 'Degtinė', price: 5 },
+                { name: 'Vynas', price: 5 },
+                { name: 'Draugų viskis', price: 8 },
+                { name: 'Šampanas', price: 7 },
             ]
         };
 
-        const itemsContainer = document.getElementById('items');
-        const summaryList = document.getElementById('summary-list');
-        const totalPriceElement = document.getElementById('total-price');
-
-        let order = {};
-
-        function renderItems(category) {
-            itemsContainer.innerHTML = '';
-            const items = itemsData[category];
-            items.forEach((item, index) => {
+        const renderItems = (category, containerId) => {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            itemsData[category].forEach((item, index) => {
                 const itemElement = document.createElement('div');
                 itemElement.classList.add('item');
                 itemElement.innerHTML = `
-                    <span>${item.name} (${item.price}$)</span>
-                    <button onclick="addItem(${index})">+</button>
-                    <span id="item-quantity-${index}">0</span>
-                    <button onclick="removeItem(${index})">-</button>
+                    <button onclick="removeItem('${category}', ${index})">-</button>
+                    <span>${item.name}</span>
+                    <input type="number" id="price-${category}-${index}" value="${item.price}" onchange="updatePrice('${category}', ${index}, this.value)">
+                    <button onclick="addItem('${category}', ${index})">+</button>
+                    <span id="item-quantity-${category}-${index}">0</span>
                 `;
-                itemsContainer.appendChild(itemElement);
+                container.appendChild(itemElement);
             });
-        }
+        };
 
-        function updateSummary() {
+        const updatePrice = (category, index, newPrice) => {
+            itemsData[category][index].price = parseFloat(newPrice);
+            updateSummary();
+        };
+
+        let order = {};
+
+        const updateSummary = () => {
+            const summaryList = document.getElementById('summary-list');
+            const totalPriceElement = document.getElementById('total-price');
             summaryList.innerHTML = '';
             let total = 0;
-            for (let [index, quantity] of Object.entries(order)) {
-                const item = itemsData['karsti-patiekalai'][index];
+            for (let [key, quantity] of Object.entries(order)) {
+                const [category, index] = key.split('-');
+                const item = itemsData[category][index];
                 total += item.price * quantity;
                 summaryList.innerHTML += `<li>${item.name} x${quantity} - ${item.price * quantity}$</li>`;
             }
             totalPriceElement.textContent = `${total}$`;
-        }
+        };
 
-        function addItem(index) {
-            if (!order[index]) {
-                order[index] = 0;
+        const addItem = (category, index) => {
+            const key = `${category}-${index}`;
+            if (!order[key]) {
+                order[key] = 0;
             }
-            order[index]++;
-            document.getElementById(`item-quantity-${index}`).textContent = order[index];
+            order[key]++;
+            document.getElementById(`item-quantity-${category}-${index}`).textContent = order[key];
             updateSummary();
-        }
+        };
 
-        function removeItem(index) {
-            if (order[index] > 0) {
-                order[index]--;
-                document.getElementById(`item-quantity-${index}`).textContent = order[index];
-                if (order[index] === 0) {
-                    delete order[index];
+        const removeItem = (category, index) => {
+            const key = `${category}-${index}`;
+            if (order[key] > 0) {
+                order[key]--;
+                document.getElementById(`item-quantity-${category}-${index}`).textContent = order[key];
+                if (order[key] === 0) {
+                    delete order[key];
                 }
                 updateSummary();
             }
-        }
+        };
 
-        function clearOrder() {
+        const clearOrder = () => {
             order = {};
-            renderItems('karsti-patiekalai');
+            renderItems('karsti-patiekalai', 'karsti-patiekalai');
+            renderItems('alkoholis', 'alkoholis');
             updateSummary();
-        }
-
-        document.getElementById('categories').addEventListener('change', function () {
-            renderItems(this.value);
-        });
+        };
 
         // Initial render
-        renderItems('karsti-patiekalai');
+        renderItems('karsti-patiekalai', 'karsti-patiekalai');
+        renderItems('alkoholis', 'alkoholis');
     </script>
 </body>
 </html>
