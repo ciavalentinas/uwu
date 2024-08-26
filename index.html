@@ -41,14 +41,19 @@
             align-items: center;
             margin: 10px 0;
         }
-        .item input[type="number"] {
-            width: 50px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            text-align: center;
+        .item-name {
+            flex: 2;
         }
-        .item button {
+        .item-price {
+            flex: 1;
+            text-align: right;
+            padding-right: 10px;
+        }
+        .item-quantity {
+            display: flex;
+            align-items: center;
+        }
+        .item-quantity button {
             padding: 5px 10px;
             background-color: #007bff;
             color: #fff;
@@ -56,8 +61,16 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        .item button:hover {
+        .item-quantity button:hover {
             background-color: #0056b3;
+        }
+        .item-quantity input {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 0 5px;
+            padding: 5px;
         }
         .summary {
             margin-top: 20px;
@@ -86,7 +99,7 @@
             .category {
                 flex: 1 1 100%;
             }
-            .item input[type="number"] {
+            .item-quantity input {
                 width: 40px;
             }
         }
@@ -152,19 +165,16 @@
                 const itemElement = document.createElement('div');
                 itemElement.classList.add('item');
                 itemElement.innerHTML = `
-                    <button onclick="removeItem('${category}', ${index})">-</button>
-                    <span>${item.name}</span>
-                    <input type="number" id="price-${category}-${index}" value="${item.price}" onchange="updatePrice('${category}', ${index}, this.value)">
-                    <button onclick="addItem('${category}', ${index})">+</button>
-                    <span id="item-quantity-${category}-${index}">0</span>
+                    <span class="item-name">${item.name}</span>
+                    <span class="item-price">${item.price}$</span>
+                    <div class="item-quantity">
+                        <button onclick="removeItem('${category}', ${index})">-</button>
+                        <input type="number" id="item-quantity-${category}-${index}" value="0" min="0" readonly>
+                        <button onclick="addItem('${category}', ${index})">+</button>
+                    </div>
                 `;
                 container.appendChild(itemElement);
             });
-        };
-
-        const updatePrice = (category, index, newPrice) => {
-            itemsData[category][index].price = parseFloat(newPrice);
-            updateSummary();
         };
 
         let order = {};
@@ -189,7 +199,7 @@
                 order[key] = 0;
             }
             order[key]++;
-            document.getElementById(`item-quantity-${category}-${index}`).textContent = order[key];
+            document.getElementById(`item-quantity-${category}-${index}`).value = order[key];
             updateSummary();
         };
 
@@ -197,7 +207,7 @@
             const key = `${category}-${index}`;
             if (order[key] > 0) {
                 order[key]--;
-                document.getElementById(`item-quantity-${category}-${index}`).textContent = order[key];
+                document.getElementById(`item-quantity-${category}-${index}`).value = order[key];
                 if (order[key] === 0) {
                     delete order[key];
                 }
