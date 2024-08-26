@@ -111,7 +111,7 @@
         <div class="categories">
             <div class="category">
                 <h3>Karšti patiekalai</h3>
-                <div id="karsti-patiekalai"></div>
+                <div id="karstipatiekalai"></div>
             </div>
             <div class="category">
                 <h3>Alkoholis</h3>
@@ -132,7 +132,7 @@
 
     <script>
         const itemsData = {
-            'karsti-patiekalai': [
+            'karstipatiekalai': [
                 { name: 'Menkė tešloje', price: 12 },
                 { name: 'Lašišos kepsnys', price: 12 },
                 { name: 'Vištienos kepsnys', price: 12 },
@@ -243,13 +243,13 @@
 
         const clearOrder = () => {
             order = {};
-            renderItems('karsti-patiekalai', 'karsti-patiekalai');
+            renderItems('karstipatiekalai', 'karstipatiekalai');
             renderItems('alkoholis', 'alkoholis');
             updateSummary();
         };
 
         // Initial render
-        renderItems('karsti-patiekalai', 'karsti-patiekalai');
+        renderItems('karstipatiekalai', 'karstipatiekalai');
         renderItems('alkoholis', 'alkoholis');
     </script>
 </body>
