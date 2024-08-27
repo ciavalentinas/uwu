@@ -266,12 +266,12 @@
         };
 
         const filterItems = () => {
-    const query = document.getElementById('search-input').value.toLowerCase();
+    const query = normalizeString(document.getElementById('search-input').value.toLowerCase());
     document.querySelectorAll('.category').forEach(category => {
         let hasVisibleItems = false;
 
         category.querySelectorAll('.item').forEach(item => {
-            const itemName = item.querySelector('.item-name').textContent.toLowerCase();
+            const itemName = normalizeString(item.querySelector('.item-name').textContent.toLowerCase());
             if (itemName.includes(query)) {
                 item.style.display = '';
                 hasVisibleItems = true;
@@ -283,6 +283,24 @@
         // Hide the category if no items are visible
         category.style.display = hasVisibleItems ? '' : 'none';
     });
+};
+
+        const normalizeString = (str) => {
+    return str
+        .replace(/š/g, 's')
+        .replace(/č/g, 'c')
+        .replace(/ž/g, 'z')
+        .replace(/ę/g, 'e')
+        .replace(/ė/g, 'e')
+        .replace(/ų/g, 'u')
+        .replace(/ū/g, 'u')
+        .replace(/Š/g, 's')
+        .replace(/Č/g, 'c')
+        .replace(/Ž/g, 'z')
+        .replace(/Ę/g, 'e')
+        .replace(/Ė/g, 'e')
+        .replace(/Ų/g, 'u')
+        .replace(/Ū/g, 'u');
 };
         
         let order = {};
