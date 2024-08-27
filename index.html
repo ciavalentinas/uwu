@@ -268,10 +268,6 @@
                 { name: 'Mai Tai', price: 8 },
                 { name: 'Mint Julep', price: 8 },
                 { name: 'Caipirinha', price: 8 },
-                { name: 'Margarita', price: 8 },
-                { name: 'Pinacolada', price: 8 },
-                { name: 'Kruvinoji mėrė', price: 8 },
-                { name: 'Kaukuolės kokteilis', price: 10 },
             ]
         };
 
@@ -335,28 +331,36 @@
         let order = {};
 
         const updateSummary = () => {
-            const summaryList = document.getElementById('summary-list');
-            const totalPriceElement = document.getElementById('total-price');
-            summaryList.innerHTML = '';
-            let total = 0;
+    const summaryList = document.getElementById('summary-list');
+    const totalPriceElement = document.getElementById('total-price');
+    const discountCheckbox = document.getElementById('apply-discount'); // Get the discount checkbox
+    summaryList.innerHTML = '';
+    let total = 0;
 
-            for (let key in order) {
-                const lastHyphenIndex = key.lastIndexOf('-');
-                const category = key.substring(0, lastHyphenIndex);
-                const index = key.substring(lastHyphenIndex + 1);
+    for (let key in order) {
+        const lastHyphenIndex = key.lastIndexOf('-');
+        const category = key.substring(0, lastHyphenIndex);
+        const index = key.substring(lastHyphenIndex + 1);
 
-                if (itemsData[category]) {
-                    const item = itemsData[category][index];
-                    const quantity = order[key];
-                    const itemTotal = item.price * quantity;
-                    total += itemTotal;
-                    summaryList.innerHTML += `<li>${item.name} x${quantity} - ${itemTotal}$</li>`;
-                } else {
-                    console.error(`Category ${category} not found in itemsData.`);
-                }
-            }
-            totalPriceElement.textContent = `${total}$`;
-        };
+        if (itemsData[category]) {
+            const item = itemsData[category][index];
+            const quantity = order[key];
+            const itemTotal = item.price * quantity;
+            total += itemTotal;
+            summaryList.innerHTML += `<li>${item.name} x${quantity} - ${itemTotal}$</li>`;
+        } else {
+            console.error(`Category ${category} not found in itemsData.`);
+        }
+    }
+
+    // Apply a 20% discount if the checkbox is checked
+    if (discountCheckbox.checked) {
+        total *= 0.8; // Apply 20% discount
+    }
+
+    totalPriceElement.textContent = `${total.toFixed(2)}$`;
+};
+
 
         const addItem = (category, index) => {
             const key = `${category}-${index}`;
