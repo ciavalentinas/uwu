@@ -112,12 +112,21 @@
                 width: 40px;
             }
         }
+        .searchbar {
+            flex: 1 1 45%;
+            margin: 10px;
+            padding: 15px;
+           /*  background-color: #444; Slightly lighter dark background */
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>wUwU skaičiuoktuviukas</h2>
-        <input type="text" id="search-input" placeholder="Ieškoti patiekalo..." oninput="filterItems()" style="border-radius: 4px; border: 1px solid #888;">
+        <div class="searchbar">
+            <input type="text" id="search-input" placeholder="Ieškoti patiekalo..." oninput="filterItems()" style="border-radius: 4px; border: 1px solid #888;">
+        </div>
         <div class="categories">
             <div class="category">
                 <h3>Karšti patiekalai</h3>
