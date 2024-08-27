@@ -266,12 +266,24 @@
         };
 
         const filterItems = () => {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            document.querySelectorAll('.item').forEach(item => {
-                const itemName = item.querySelector('.item-name').textContent.toLowerCase();
-                item.style.display = itemName.includes(query) ? '' : 'none';
-            });
-        };
+    const query = document.getElementById('search-input').value.toLowerCase();
+    document.querySelectorAll('.category').forEach(category => {
+        let hasVisibleItems = false;
+
+        category.querySelectorAll('.item').forEach(item => {
+            const itemName = item.querySelector('.item-name').textContent.toLowerCase();
+            if (itemName.includes(query)) {
+                item.style.display = '';
+                hasVisibleItems = true;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // Hide the category if no items are visible
+        category.style.display = hasVisibleItems ? '' : 'none';
+    });
+};
         
         let order = {};
 
