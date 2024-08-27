@@ -330,7 +330,7 @@
         
         let order = {};
 
-const updateSummary = () => {
+        const updateSummary = () => {
     const summaryList = document.getElementById('summary-list');
     const totalPriceElement = document.getElementById('total-price');
     const discountCheckbox = document.getElementById('apply-discount'); // Get the discount checkbox
@@ -352,14 +352,6 @@ const updateSummary = () => {
             console.error(`Category ${category} not found in itemsData.`);
         }
     }
-
-    // Apply a 20% discount if the checkbox is checked
-    if (discountCheckbox.checked) {
-        total *= 0.8; // Apply 20% discount
-    }
-
-    totalPriceElement.textContent = `${total.toFixed(2)}$`;
-};
 
     // Apply a 20% discount if the checkbox is checked
     if (discountCheckbox.checked) {
