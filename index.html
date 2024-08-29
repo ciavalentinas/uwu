@@ -501,6 +501,14 @@
         order = {};
         document.getElementById("search-input").value = "";
         document.getElementById("discount-checkbox").checked = false;
+
+        document.querySelectorAll(".category").forEach((category) => {
+          category.style.display = "";
+          category.querySelectorAll(".item").forEach((item) => {
+            item.style.display = "";
+          });
+        });
+
         renderItems("karstipatiekalai", "karstipatiekalai");
         renderItems("sriubos", "sriubos");
         renderItems("picos", "picos");
@@ -509,10 +517,10 @@
         renderItems("gerimai", "gerimai");
         renderItems("alkoholis", "alkoholis");
         renderItems("kokteiliai", "kokteiliai");
+
         updateSummary();
       };
 
-      // Initial render
       renderItems("karstipatiekalai", "karstipatiekalai");
       renderItems("sriubos", "sriubos");
       renderItems("picos", "picos");
