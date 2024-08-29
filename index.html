@@ -1,287 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>uWu skaičiuotuvas</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            /*background-color: #2e2e2e; Dark background */
-            background: radial-gradient(circle at -14.3% -17.5%, rgb(245, 168, 168) 4%, rgb(164, 168, 248) 100.2%);
-            color: #f0f0f0; /* Light text color */
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #333; /* Darker background for container */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-        h2 {
-            text-align: center;
-            color: #e0aaff; /* Pastel purple */
-        }
-        .categories {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background: radial-gradient(
+          circle at -14.3% -17.5%,
+          rgb(245, 168, 168) 4%,
+          rgb(164, 168, 248) 100.2%
+        );
+        color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #333;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+      h2 {
+        text-align: center;
+        color: #e0aaff;
+      }
+      .categories {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .category {
+        flex: 1 1 45%;
+        margin: 10px;
+        padding: 15px;
+        background-color: #444;
+        border-radius: 5px;
+      }
+      .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0;
+        background-color: #555;
+        border-radius: 4px;
+        padding: 10px;
+      }
+      .item-name {
+        flex: 2;
+        color: #e0e0e0;
+      }
+      .item-price {
+        flex: 1;
+        text-align: right;
+        padding-right: 10px;
+        color: #f0e6f6;
+      }
+      .item-quantity {
+        display: flex;
+        align-items: center;
+      }
+      .item-quantity button {
+        padding: 5px 10px;
+        background-color: #9e9e9e;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .item-quantity button:hover {
+        background-color: #7a7a7a;
+      }
+      .item-quantity input {
+        width: 50px;
+        text-align: center;
+        border: 1px solid #888;
+        border-radius: 4px;
+        margin: 0 5px;
+        padding: 5px;
+        background-color: #666;
+        color: #e0e0e0;
+      }
+      .summary {
+        margin-top: 20px;
+      }
+      .total {
+        font-size: 1.2em;
+        text-align: right;
+        margin-top: 10px;
+        color: #a0e0e0;
+      }
+      .clear-btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      .clear-btn:hover {
+        background-color: #c82333;
+      }
+      @media (max-width: 600px) {
         .category {
-            flex: 1 1 45%;
-            margin: 10px;
-            padding: 15px;
-            background-color: #444; /* Slightly lighter dark background */
-            border-radius: 5px;
-        }
-        .item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 10px 0;
-            background-color: #555; /* Darker background for items */
-            border-radius: 4px;
-            padding: 10px;
-        }
-        .item-name {
-            flex: 2;
-            color: #e0e0e0; /* Light text color */
-        }
-        .item-price {
-            flex: 1;
-            text-align: right;
-            padding-right: 10px;
-            color: #f0e6f6; /* Light pastel purple */
-        }
-        .item-quantity {
-            display: flex;
-            align-items: center;
-        }
-        .item-quantity button {
-            padding: 5px 10px;
-            background-color: #9e9e9e; /* Grayish pastel button */
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .item-quantity button:hover {
-            background-color: #7a7a7a; /* Darker gray for hover */
+          flex: 1 1 100%;
         }
         .item-quantity input {
-            width: 50px;
-            text-align: center;
-            border: 1px solid #888;
-            border-radius: 4px;
-            margin: 0 5px;
-            padding: 5px;
-            background-color: #666; /* Darker input background */
-            color: #e0e0e0; /* Light text color for input */
+          width: 40px;
         }
-        .summary {
-            margin-top: 20px;
-        }
-        .total {
-            font-size: 1.5em;
-            text-align: right;
-            margin-top: 10px;
-            color: #a0e0e0; /* Pastel mint green */
-        }
-        .clear-btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #dc3545;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .clear-btn:hover {
-            background-color: #c82333;
-        }
-        @media (max-width: 600px) {
-            .category {
-                flex: 1 1 100%;
-            }
-            .item-quantity input {
-                width: 40px;
-            }
-        }
-        .searchbar {
+      }
+      .searchbar {
         margin: auto;
         padding: 0 0 0.5rem;
         border-radius: 5px;
-    }
+      }
 
-    #search-input {
+      .logo-container {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      #search-input {
         width: 100%;
         padding: 10px 0;
         border-radius: 4px;
         border: 1px solid #888;
-        background-color: #444; /* Matching the background of the category */
-        color: #e0e0e0; /* Light text color */
+        background-color: #444;
+        color: #e0e0e0;
         box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
+      }
 
-    #search-input:focus {
-        background-color: #555; /* Slightly lighter for focus */
-        box-shadow: 0 0 5px 2px rgba(224, 170, 255, 0.7); /* Purple glow */
+      #search-input:focus {
+        background-color: #555;
+        box-shadow: 0 0 5px 2px rgba(224, 170, 255, 0.7);
         outline: none;
-        border-color: #e0aaff; /* Match the heading color */
-    }
+        border-color: #e0aaff;
+      }
+      .discount-section {
+        font-size: 1.2em;
+        text-align: center;
+        margin: 1rem 1rem;
+      }
+
+      .info-symbol {
+        display: inline-block;
+        margin-left: 5px;
+        cursor: pointer;
+        color: #e0aaff;
+        font-size: 1.2em;
+        vertical-align: middle;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="logo-container">
+      <img
+        src="https://static.wikia.nocookie.net/vectorrp/images/2/20/Logo_UWU.png/revision/latest?cb=20230414064135&path-prefix=id"
+        alt="uWu Logo"
+        width="150"
+      />
+    </div>
+
     <div class="container">
-        <h2>wUwU skaičiuoktuviukas</h2>
-        <div class="searchbar">
-            <input type="text" id="search-input" placeholder="Ieškoti patiekalo..." oninput="filterItems()" style="width: 100%;border-radius: 4px; border: 1px solid #888;">
+      <h2>UWU BARISTŲ ROJUS</h2>
+      <div class="searchbar">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="  Ieškoti patiekalo..."
+          oninput="filterItems()"
+          style="width: 100%; border-radius: 4px; border: 1px solid #888"
+        />
+      </div>
+      <div class="categories">
+        <div class="category">
+          <h3>Karšti patiekalai</h3>
+          <div id="karstipatiekalai"></div>
         </div>
-        <div class="categories">
-            <div class="category">
-                <h3>Karšti patiekalai</h3>
-                <div id="karstipatiekalai"></div>
-            </div>
-            <div class="category">
-                <h3>Sriubos</h3>
-                <div id="sriubos"></div>
-            </div>
-            <div class="category">
-                <h3>Picos / Salotos</h3>
-                <div id="picos"></div>
-            </div>
-            <div class="category">
-                <h3>Desertai</h3>
-                <div id="desertai"></div>
-            </div>
-            <div class="category">
-                <h3>Kita</h3>
-                <div id="kita"></div>
-            </div>
-            <div class="category">
-                <h3>Gėrimai</h3>
-                <div id="gerimai"></div>
-            </div>
-            <div class="category">
-                <h3>Alkoholis</h3>
-                <div id="alkoholis"></div>
-            </div>
-            <div class="category">
-                <h3>Alkoholiniai kokteiliai</h3>
-                <div id="kokteiliai"></div>
-            </div>
+        <div class="category">
+          <h3>Sriubos</h3>
+          <div id="sriubos"></div>
         </div>
-        <div class="summary">
-            <h3>Užsakymo sąrašas</h3>
-            <ul id="summary-list">
-                <!-- Selected items will be listed here -->
-            </ul>
-            <div class="total">
-                Iš viso: <span id="total-price">0$</span>
-            </div>
-            <button class="clear-btn" onclick="clearOrder()">Išvalyti</button>
+        <div class="category">
+          <h3>Picos / Salotos</h3>
+          <div id="picos"></div>
         </div>
+        <div class="category">
+          <h3>Desertai</h3>
+          <div id="desertai"></div>
+        </div>
+        <div class="category">
+          <h3>Kita</h3>
+          <div id="kita"></div>
+        </div>
+        <div class="category">
+          <h3>Gėrimai</h3>
+          <div id="gerimai"></div>
+        </div>
+        <div class="category">
+          <h3>Alkoholis</h3>
+          <div id="alkoholis"></div>
+        </div>
+        <div class="category">
+          <h3>Alkoholiniai kokteiliai</h3>
+          <div id="kokteiliai"></div>
+        </div>
+      </div>
+      <div class="discount-section">
+        <label for="discount-checkbox">
+          <input
+            type="checkbox"
+            id="discount-checkbox"
+            onchange="applyDiscount()"
+            style="vertical-align: baseline"
+          />
+          20% nuolaida
+        </label>
+        <span class="info-symbol" onclick="toggleInfo()">ℹ️</span>
+        <div
+          id="info-tooltip"
+          style="
+            display: none;
+            background-color: #555;
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            z-index: 1;
+          "
+        >
+          Penktadienį – PD ir medikams taikoma 20% nuolaida.<br />
+          Šeštadienį – mechanikams ir advokatams taikoma 20% nuolaida.<br />
+          Sekmadienį – PD, medikams, mechanikams ir advokatams taikoma 20%
+          nuolaida.
+        </div>
+      </div>
+
+      <div class="summary">
+        <h3>Užsakymo sąrašas</h3>
+        <ul id="summary-list"></ul>
+        <div class="total">Iš viso: <span id="total-price">0$</span></div>
+        <button class="clear-btn" onclick="clearOrder()">Išvalyti</button>
+      </div>
     </div>
 
     <script>
-        const itemsData = {
-            'karstipatiekalai': [
-                { name: 'Menkė tešloje', price: 12 },
-                { name: 'Lašišos kepsnys', price: 12 },
-                { name: 'Vištienos kepsnys', price: 12 },
-                { name: 'Starkio kepsnys', price: 12 },
-                { name: 'Cepelinai', price: 12 },
-                { name: 'Vedarai', price: 12 },
-                { name: 'Kūgelis', price: 12 },
-                { name: 'Balandėliai', price: 12 },
-                { name: 'Šašlykai', price: 12 },
-                { name: 'Šonkauliai', price: 12 },
-                { name: 'Traškios krevetės', price: 12 },
-                { name: 'Suši', price: 13 },
-                { name: 'Koldūnai', price: 10 },
-                { name: 'Čeburėkai', price: 10 },
-            ],
-            'sriubos': [
-                { name: 'Šaltibarščiai', price: 10 },
-                { name: 'Kopūstų sriuba', price: 10 },
-                { name: 'Trinta moliūgų sriuba', price: 10 },
-                { name: 'Barščių sriuba', price: 10 },
-                { name: 'Čili sriuba', price: 10 },
-            ],
-            'picos': [
-                { name: 'Cezario salotos', price: 10 },
-                { name: 'Pica su ananasais ir šonine', price: 20 },
-                { name: 'Pica su faršu ir alyvuogėmis', price: 20 },
-                { name: 'Pica su kumpiu ir pievagrybiais', price: 20 },
-            ],
-            'desertai': [
-                { name: 'Šokoladinis keksiukas su vyšniomis', price: 10 },
-                { name: 'Ledai su vafliu', price: 20 },
-                { name: 'Blyneliai su varške', price: 20 },
-                { name: 'Spurgų dėžutė 12 vnt.', price: 20 },
-                { name: 'Vestuvinis tortas', price: 250 },
-                { name: 'Mėlynas tortas', price: 150 },
-                { name: 'Rūžavas tortas', price: 150 },
-                { name: 'UWU tortas', price: 25 },
-                { name: 'UWU sausainiai', price: 10 },
-                { name: 'Macaronsai', price: 10 },
-            ],
-            'kita': [
-                { name: 'Deimančiuko rauginti agurkai', price: 15 },
-                { name: 'Šampano dovanų dėžutė', price: 150 },
-                { name: 'Saldainių ir šampano dovanų dėžutė', price: 150 },
-                { name: 'Saldainių ir viskio dovanų dėžutė', price: 150 },
-                { name: 'Viskio dovanų dėžutė', price: 150 },
-                { name: 'Sezoninė dėžutė', price: 200 },
-            ],
-            'gerimai': [
-                { name: 'Apelsinų sultys', price: 7 },
-                { name: 'Multivitaminų sultys', price: 7 },
-                { name: 'Gira', price: 4 },
-                { name: 'Cola', price: 4 },
-                { name: 'Vanduo', price: 3 },
-                { name: 'Arbata', price: 3 },
-                { name: 'Juoda kava', price: 4 },
-                { name: 'Kava su pienu', price: 4 },
-            ],
-            'alkoholis': [
-                { name: 'Degtinė 100ml', price: 3 },
-                { name: 'Alus', price: 5 },
-                { name: 'Degtinė', price: 5 },
-                { name: 'Vynas', price: 5 },
-                { name: 'Draugų viskis', price: 8 },
-                { name: 'Šampanas', price: 7 },
-            ],
-            'kokteiliai': [
-                { name: 'Mėlynoji lagūna', price: 10 },
-                { name: 'Vaivorykštė', price: 10 },
-                { name: 'Viskis su kaukole', price: 10 },
-                { name: 'Žalioji vesper', price: 8 },
-                { name: 'Cosmopolitan', price: 8 },
-                { name: 'Mojito', price: 8 },
-                { name: 'Mai Tai', price: 8 },
-                { name: 'Mint Julep', price: 8 },
-                { name: 'Caipirinha', price: 8 },
-                { name: 'Margarita', price: 8 },
-                { name: 'Pinacolada', price: 8 },
-                { name: 'Kruvinoji mėrė', price: 8 },
-                { name: 'Kaukuolės kokteilis', price: 10 },
-            ]
-        };
+      const itemsData = {
+        karstipatiekalai: [
+          { name: "Menkė tešloje", price: 12 },
+          { name: "Lašišos kepsnys", price: 12 },
+          { name: "Vištienos kepsnys", price: 12 },
+          { name: "Starkio kepsnys", price: 12 },
+          { name: "Cepelinai", price: 12 },
+          { name: "Vedarai", price: 12 },
+          { name: "Kūgelis", price: 12 },
+          { name: "Balandėliai", price: 12 },
+          { name: "Šašlykai", price: 12 },
+          { name: "Šonkauliai", price: 12 },
+          { name: "Traškios krevetės", price: 12 },
+          { name: "Suši", price: 13 },
+          { name: "Koldūnai", price: 10 },
+          { name: "Čeburėkai", price: 10 },
+        ],
+        sriubos: [
+          { name: "Šaltibarščiai", price: 10 },
+          { name: "Kopūstų sriuba", price: 10 },
+          { name: "Trinta moliūgų sriuba", price: 10 },
+          { name: "Barščių sriuba", price: 10 },
+          { name: "Čili sriuba", price: 10 },
+        ],
+        picos: [
+          { name: "Cezario salotos", price: 10 },
+          { name: "Pica su ananasais ir šonine", price: 20 },
+          { name: "Pica su faršu ir alyvuogėmis", price: 20 },
+          { name: "Pica su kumpiu ir pievagrybiais", price: 20 },
+        ],
+        desertai: [
+          { name: "Šokoladinis keksiukas su vyšniomis", price: 10 },
+          { name: "Ledai su vafliu", price: 20 },
+          { name: "Blyneliai su varške", price: 20 },
+          { name: "Spurgų dėžutė 12 vnt.", price: 20 },
+          { name: "Vestuvinis tortas", price: 250 },
+          { name: "Mėlynas tortas", price: 150 },
+          { name: "Rūžavas tortas", price: 150 },
+          { name: "UWU tortas", price: 25 },
+          { name: "UWU sausainiai", price: 10 },
+          { name: "Macaronsai", price: 10 },
+        ],
+        kita: [
+          { name: "Deimančiuko rauginti agurkai", price: 15 },
+          { name: "Šampano dovanų dėžutė", price: 150 },
+          { name: "Saldainių ir šampano dovanų dėžutė", price: 150 },
+          { name: "Saldainių ir viskio dovanų dėžutė", price: 150 },
+          { name: "Viskio dovanų dėžutė", price: 150 },
+          { name: "Sezoninė dėžutė", price: 200 },
+        ],
+        gerimai: [
+          { name: "Apelsinų sultys", price: 7 },
+          { name: "Multivitaminų sultys", price: 7 },
+          { name: "Gira", price: 4 },
+          { name: "Cola", price: 4 },
+          { name: "Vanduo", price: 3 },
+          { name: "Arbata", price: 3 },
+          { name: "Juoda kava", price: 4 },
+          { name: "Kava su pienu", price: 4 },
+        ],
+        alkoholis: [
+          { name: "Degtinė 100ml", price: 3 },
+          { name: "Alus", price: 5 },
+          { name: "Degtinė", price: 5 },
+          { name: "Vynas", price: 5 },
+          { name: "Draugų viskis", price: 8 },
+          { name: "Šampanas", price: 7 },
+        ],
+        kokteiliai: [
+          { name: "Mėlynoji lagūna", price: 10 },
+          { name: "Vaivorykštė", price: 10 },
+          { name: "Viskis su kaukole", price: 10 },
+          { name: "Žalioji vesper", price: 8 },
+          { name: "Cosmopolitan", price: 8 },
+          { name: "Mojito", price: 8 },
+          { name: "Mai Tai", price: 8 },
+          { name: "Mint Julep", price: 8 },
+          { name: "Caipirinha", price: 8 },
+          { name: "Margarita", price: 8 },
+          { name: "Pinacolada", price: 8 },
+          { name: "Kruvinoji mėrė", price: 8 },
+          { name: "Kaukuolės kokteilis", price: 10 },
+        ],
+      };
 
-        const renderItems = (category, containerId) => {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-            itemsData[category].forEach((item, index) => {
-                const itemElement = document.createElement('div');
-                itemElement.classList.add('item');
-                itemElement.innerHTML = `
+      function toggleInfo() {
+        const infoTooltip = document.getElementById("info-tooltip");
+        if (
+          infoTooltip.style.display === "none" ||
+          infoTooltip.style.display === ""
+        ) {
+          infoTooltip.style.display = "block";
+        } else {
+          infoTooltip.style.display = "none";
+        }
+      }
+
+      const renderItems = (category, containerId) => {
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+        itemsData[category].forEach((item, index) => {
+          const itemElement = document.createElement("div");
+          itemElement.classList.add("item");
+          itemElement.innerHTML = `
                     <span class="item-name">${item.name}</span>
                     <span class="item-price">${item.price}$</span>
                     <div class="item-quantity">
@@ -290,127 +364,163 @@
                         <button onclick="addItem('${category}', ${index})">+</button>
                     </div>
                 `;
-                container.appendChild(itemElement);
-            });
-        };
-
-        const filterItems = () => {
-    const query = normalizeString(document.getElementById('search-input').value.toLowerCase());
-    document.querySelectorAll('.category').forEach(category => {
-        let hasVisibleItems = false;
-
-        category.querySelectorAll('.item').forEach(item => {
-            const itemName = normalizeString(item.querySelector('.item-name').textContent.toLowerCase());
-            if (itemName.includes(query)) {
-                item.style.display = '';
-                hasVisibleItems = true;
-            } else {
-                item.style.display = 'none';
-            }
+          container.appendChild(itemElement);
         });
+      };
 
-        // Hide the category if no items are visible
-        category.style.display = hasVisibleItems ? '' : 'none';
-    });
-};
+      const filterItems = () => {
+        const query = normalizeString(
+          document.getElementById("search-input").value.toLowerCase()
+        );
+        document.querySelectorAll(".category").forEach((category) => {
+          let hasVisibleItems = false;
 
-        const normalizeString = (str) => {
-    return str
-        .replace(/š/g, 's')
-        .replace(/č/g, 'c')
-        .replace(/ž/g, 'z')
-        .replace(/ę/g, 'e')
-        .replace(/ė/g, 'e')
-        .replace(/ų/g, 'u')
-        .replace(/ū/g, 'u')
-        .replace(/Š/g, 's')
-        .replace(/Č/g, 'c')
-        .replace(/Ž/g, 'z')
-        .replace(/Ę/g, 'e')
-        .replace(/Ė/g, 'e')
-        .replace(/Ų/g, 'u')
-        .replace(/Ū/g, 'u');
-};
-        
-        let order = {};
-
-        const updateSummary = () => {
-            const summaryList = document.getElementById('summary-list');
-            const totalPriceElement = document.getElementById('total-price');
-            summaryList.innerHTML = '';
-            let total = 0;
-
-            for (let key in order) {
-                const lastHyphenIndex = key.lastIndexOf('-');
-                const category = key.substring(0, lastHyphenIndex);
-                const index = key.substring(lastHyphenIndex + 1);
-
-                if (itemsData[category]) {
-                    const item = itemsData[category][index];
-                    const quantity = order[key];
-                    const itemTotal = item.price * quantity;
-                    total += itemTotal;
-                    summaryList.innerHTML += `<li>${item.name} x${quantity} - ${itemTotal}$</li>`;
-                } else {
-                    console.error(`Category ${category} not found in itemsData.`);
-                }
+          category.querySelectorAll(".item").forEach((item) => {
+            const itemName = normalizeString(
+              item.querySelector(".item-name").textContent.toLowerCase()
+            );
+            if (itemName.includes(query)) {
+              item.style.display = "";
+              hasVisibleItems = true;
+            } else {
+              item.style.display = "none";
             }
-            totalPriceElement.textContent = `${total}$`;
-        };
+          });
 
-        const addItem = (category, index) => {
-            const key = `${category}-${index}`;
-            if (!order[key]) {
-                order[key] = 0;
-            }
-            order[key]++;
-            document.getElementById(`item-quantity-${category}-${index}`).value = order[key];
-            updateSummary();
-        };
+          category.style.display = hasVisibleItems ? "" : "none";
+        });
+      };
 
-        const removeItem = (category, index) => {
-            const key = `${category}-${index}`;
-            if (order[key] > 0) {
-                order[key]--;
-                document.getElementById(`item-quantity-${category}-${index}`).value = order[key];
-                if (order[key] === 0) {
-                    delete order[key];
-                }
-                updateSummary();
-            }
-        };
+      const normalizeString = (str) => {
+        return str
+          .replace(/š/g, "s")
+          .replace(/č/g, "c")
+          .replace(/ž/g, "z")
+          .replace(/ę/g, "e")
+          .replace(/ė/g, "e")
+          .replace(/ų/g, "u")
+          .replace(/ū/g, "u")
+          .replace(/Š/g, "s")
+          .replace(/Č/g, "c")
+          .replace(/Ž/g, "z")
+          .replace(/Ę/g, "e")
+          .replace(/Ė/g, "e")
+          .replace(/Ų/g, "u")
+          .replace(/Ū/g, "u");
+      };
 
-        const updateItem = (category, index, value) => {
-            const key = `${category}-${index}`;
-            const quantity = parseInt(value);
-            if (quantity >= 0) {
-                order[key] = quantity;
-                updateSummary();
-            }
-        };
+      let order = {};
 
-        const clearOrder = () => {
-            order = {};
-            renderItems('karstipatiekalai', 'karstipatiekalai');
-            renderItems('sriubos', 'sriubos');
-            renderItems('picos', 'picos');
-            renderItems('desertai', 'desertai');
-            renderItems('kita', 'kita');
-            renderItems('gerimai', 'gerimai');
-            renderItems('alkoholis', 'alkoholis');
-            renderItems('kokteiliai', 'kokteiliai');
-            updateSummary();
-        };
+      const updateSummary = () => {
+        const summaryList = document.getElementById("summary-list");
+        const totalPriceElement = document.getElementById("total-price");
+        const discountCheckbox = document.getElementById("discount-checkbox");
+        let total = 0;
 
-        // Initial render
-        renderItems('karstipatiekalai', 'karstipatiekalai');
-            renderItems('sriubos', 'sriubos');
-            renderItems('picos', 'picos');
-            renderItems('desertai', 'desertai');
-            renderItems('kita', 'kita');
-            renderItems('gerimai', 'gerimai');
-            renderItems('alkoholis', 'alkoholis');
-            renderItems('kokteiliai', 'kokteiliai');
+        summaryList.innerHTML = "";
+
+        for (let key in order) {
+          const lastHyphenIndex = key.lastIndexOf("-");
+          const category = key.substring(0, lastHyphenIndex);
+          const index = key.substring(lastHyphenIndex + 1);
+
+          if (itemsData[category]) {
+            const item = itemsData[category][index];
+            const quantity = order[key];
+            const itemTotal = item.price * quantity;
+            total += itemTotal;
+            summaryList.innerHTML += `<li>${item.name} x${quantity} - ${itemTotal}$</li>`;
+          }
+        }
+
+        let discountedTotal = total;
+
+        if (discountCheckbox.checked) {
+          discountedTotal = total * 0.8;
+        }
+
+        totalPriceElement.textContent = `${total}$`;
+
+        const discountPriceElement =
+          document.getElementById("discounted-price");
+        if (discountCheckbox.checked) {
+          if (!discountPriceElement) {
+            const newLine = document.createElement("div");
+            newLine.id = "discounted-price";
+            newLine.className = "total";
+            newLine.textContent = `Su nuolaida: ${discountedTotal.toFixed(2)}$`;
+            totalPriceElement.parentNode.appendChild(newLine);
+          } else {
+            discountPriceElement.textContent = `Su nuolaida: ${discountedTotal.toFixed(
+              2
+            )}$`;
+          }
+        } else if (discountPriceElement) {
+          discountPriceElement.remove();
+        }
+      };
+
+      const applyDiscount = () => {
+        updateSummary();
+      };
+
+      const addItem = (category, index) => {
+        const key = `${category}-${index}`;
+        if (!order[key]) {
+          order[key] = 0;
+        }
+        order[key]++;
+        document.getElementById(`item-quantity-${category}-${index}`).value =
+          order[key];
+        updateSummary();
+      };
+
+      const removeItem = (category, index) => {
+        const key = `${category}-${index}`;
+        if (order[key] > 0) {
+          order[key]--;
+          document.getElementById(`item-quantity-${category}-${index}`).value =
+            order[key];
+          if (order[key] === 0) {
+            delete order[key];
+          }
+          updateSummary();
+        }
+      };
+
+      const updateItem = (category, index, value) => {
+        const key = `${category}-${index}`;
+        const quantity = parseInt(value);
+        if (quantity >= 0) {
+          order[key] = quantity;
+          updateSummary();
+        }
+      };
+
+      const clearOrder = () => {
+        order = {};
+        document.getElementById("search-input").value = "";
+        document.getElementById("discount-checkbox").checked = false;
+        renderItems("karstipatiekalai", "karstipatiekalai");
+        renderItems("sriubos", "sriubos");
+        renderItems("picos", "picos");
+        renderItems("desertai", "desertai");
+        renderItems("kita", "kita");
+        renderItems("gerimai", "gerimai");
+        renderItems("alkoholis", "alkoholis");
+        renderItems("kokteiliai", "kokteiliai");
+        updateSummary();
+      };
+
+      // Initial render
+      renderItems("karstipatiekalai", "karstipatiekalai");
+      renderItems("sriubos", "sriubos");
+      renderItems("picos", "picos");
+      renderItems("desertai", "desertai");
+      renderItems("kita", "kita");
+      renderItems("gerimai", "gerimai");
+      renderItems("alkoholis", "alkoholis");
+      renderItems("kokteiliai", "kokteiliai");
     </script>
-</body>
+  </body>
 </html>
