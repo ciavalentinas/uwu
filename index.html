@@ -190,6 +190,10 @@
           <div id="sriubos"></div>
         </div>
         <div class="category">
+          <h3>Užkandžiai</h3>
+          <div id="uzkandziai"></div>
+        </div>
+        <div class="category">
           <h3>Picos / Salotos</h3>
           <div id="picos"></div>
         </div>
@@ -276,6 +280,14 @@
           { name: "Barščių sriuba", price: 10 },
           { name: "Čili sriuba", price: 10 },
         ],
+        uzkandziai: [
+          { name: "Silkė pataluose", price: 10 },
+          { name: "Balta mišrainė", price: 10 },
+          { name: "Kepta duona", price: 10 },
+          { name: "Karštai rūkytas jurinis ešerys", price: 10 },
+          { name: "Rūkyta menkė", price: 10 },
+          { name: "Rūkyti lašiniai", price: 10 },
+        ],
         picos: [
           { name: "Cezario salotos", price: 10 },
           { name: "Pica su ananasais ir šonine", price: 20 },
@@ -283,10 +295,10 @@
           { name: "Pica su kumpiu ir pievagrybiais", price: 20 },
         ],
         desertai: [
-          { name: "Šokoladinis keksiukas su vyšniomis", price: 10 },
-          { name: "Ledai su vafliu", price: 20 },
-          { name: "Blyneliai su varške", price: 20 },
-          { name: "Spurgų dėžutė 12 vnt.", price: 20 },
+          { name: "Šokoladinis keksiukas su vyšniomis", price: 3 },
+          { name: "Ledai su vafliu", price: 3 },
+          { name: "Blyneliai su varške", price: 3 },
+          { name: "Spurgų dėžutė 12 vnt.", price: 12 },
           { name: "Vestuvinis tortas", price: 250 },
           { name: "Mėlynas tortas", price: 150 },
           { name: "Rūžavas tortas", price: 150 },
@@ -511,6 +523,7 @@
 
         renderItems("karstipatiekalai", "karstipatiekalai");
         renderItems("sriubos", "sriubos");
+        renderItems("uzkandziai", "uzkandziai");
         renderItems("picos", "picos");
         renderItems("desertai", "desertai");
         renderItems("kita", "kita");
@@ -523,6 +536,7 @@
 
       renderItems("karstipatiekalai", "karstipatiekalai");
       renderItems("sriubos", "sriubos");
+      renderItems("uzkandziai", "uzkandziai");
       renderItems("picos", "picos");
       renderItems("desertai", "desertai");
       renderItems("kita", "kita");
